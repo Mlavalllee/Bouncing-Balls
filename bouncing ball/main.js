@@ -8,44 +8,79 @@ cnv.width = 600;
 cnv.height = 800;
 
 //  Ball Array
-let ball = [];
+let bouncingball = [];
+let gravityball = [];
+let bounceonmouse = [];
+let Gravityonmouse = [];
 
 // Event listener / function
+document.addEventListener("mousemove", MouseMovementHandler);
+
+function MouseMovementHandler (event) {
+    document.innerHTMl = cnv;
+    let x = event.clientX;
+    let y = event.clientY;
+    console.log(x, y);
+}
+
 document.addEventListener("keydown", keydownHandler)
 
 function keydownHandler(event) {
- if (event.keyCode === 39) {
-    ball.pop();
- } else if (event.keyCode === 37) {
-    ball.push(NewBall());
- }
+    if (event.keyCode === 39) {
+        gravityball.pop();
+    } else if (event.keyCode === 37) {
+        gravityball.push(NewBall());
+    }else if (event.keyCode === 81) {
+        bouncingball.push(NewBall());
+    }else if (event.keyCode === 87) {
+        bouncingball.pop();
+    }else if (event.keyCode) {
+        bounceonmouse.push();
+    }else if (event.keyCode) {
+        bounceonmouse.pop();
+    }else if (event.keyCode) {
+        Gravityonmouse.push();
+    }else if (event.keyCode) {
+        Gravityonmouse.pop();
+    }
+}
+// call loop
+requestAnimationFrame(ClearCanvas);
+requestAnimationFrame(Draw);
+
+// Draw Balls functions
+function Draw() {
+    // Move and Draw Balls with Gravity
+    for (let i = 0; i < gravityball.length; i++) {
+        GravityMoveBall(gravityball[i]);
+        MoveBallSideWays(gravityball[i]);
+        DrawBall(gravityball[i]);
+        RemoveBall(gravityball[i]);
+    }
+    // Move and Draw bouncing Balls
+    for (let i = 0; i < bouncingball.length; i++) {
+        BouncingMoveBall(bouncingball[i]);
+        DrawBall(bouncingball[i]);
+    }
+    requestAnimationFrame(Draw);
 }
 
-// call animation loop
-requestAnimationFrame(draw);
+// function to Clear Canvas 
 
-
-function draw() {
+function ClearCanvas() {
     //Clear Canvas
     ctx.clearRect(0, 0, cnv.width, cnv.height);
-
-    // Move and Draw all Bubbles
-    for (let i = 0; i < ball.length; i++) {
-        MoveBall(ball[i]);
-        DrawBall(ball[i]);
-     
-    }
-
-    requestAnimationFrame(draw)
+    requestAnimationFrame(ClearCanvas);
 }
 
 // Ball's variables
-function NewBall(InitX, InitY, InitR, InitV, InitG) {
+function NewBall(InitX, InitY, InitR, InitV, InitG, InitS) {
     return {
         x: randomInt(10.5, 590),
-        y: 780,
+        y: 785,
         r: 15,
-        v: 0,
-        g: -11
+        v: -11,
+        g: -11,
+        s: 4
     }
 }
