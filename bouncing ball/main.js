@@ -20,7 +20,7 @@ function MouseMovementHandler (event) {
     document.innerHTMl = cnv;
     let x = event.clientX;
     let y = event.clientY;
-    console.log(x, y);
+    //console.log(x, y);
 }
 
 document.addEventListener("keydown", keydownHandler)
@@ -45,11 +45,12 @@ function keydownHandler(event) {
     }
 }
 // call loop
-requestAnimationFrame(ClearCanvas);
 requestAnimationFrame(Draw);
 
 // Draw Balls functions
 function Draw() {
+    // Clear Canvas
+    ctx.clearRect(0, 0, cnv.width, cnv.height);
     // Move and Draw Balls with Gravity
     for (let i = 0; i < gravityball.length; i++) {
         GravityMoveBall(gravityball[i]);
@@ -62,15 +63,15 @@ function Draw() {
         BouncingMoveBall(bouncingball[i]);
         DrawBall(bouncingball[i]);
     }
+    // Move and Draw Bounce to mouse Balls
+    for (let i = 0; i < bounceonmouse.length; i++) {
+        
+    }
+    // Move and Draw Energy Loss to mouse Balls
+    for (let i = 0; i < Gravityonmouse.length; i++) {
+
+    }
     requestAnimationFrame(Draw);
-}
-
-// function to Clear Canvas 
-
-function ClearCanvas() {
-    //Clear Canvas
-    ctx.clearRect(0, 0, cnv.width, cnv.height);
-    requestAnimationFrame(ClearCanvas);
 }
 
 // Ball's variables
