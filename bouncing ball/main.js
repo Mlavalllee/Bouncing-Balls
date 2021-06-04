@@ -29,13 +29,13 @@ function MouseMovementHandler (event) {
     y = Math.floor(event.clientY - cnvRect.top);
 }
 
-document.addEventListener("keydown", keydownHandler)
+document.addEventListener("keydown", keydownHandler);
 
 function keydownHandler(event) {
-    if (event.keyCode === 39) {
-        gravityball.pop();
-    } else if (event.keyCode === 37) {
+    if (event.keyCode === 69) {
         gravityball.push(NewBall());
+    } else if (event.keyCode === 82) {
+        gravityball.pop();
     }else if (event.keyCode === 81) {
         bouncingball.push(NewBall());
     }else if (event.keyCode === 87) {
@@ -44,9 +44,9 @@ function keydownHandler(event) {
         bounceonmouse.push(NewBallMouse(x, y, 15, 0, -11, 4));
     }else if (event.keyCode == 83) {
         bounceonmouse.pop();
-    }else if (event.keyCode == 38) {
+    }else if (event.keyCode == 90) {
         gravityonmouse.push(NewBallMouse(x, y, 15, 0, -11, 4));
-    }else if (event.keyCode == 40) {
+    }else if (event.keyCode == 88) {
         gravityonmouse.pop();
     }
 }
