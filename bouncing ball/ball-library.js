@@ -6,15 +6,24 @@ function DrawBall(ABall) {
     circle(ABall.x, ABall.y, ABall.r, "fill");
 }
 
-// Draw Bouncing Balls
-
-    function BouncingMoveBall(ABall) {
-        if (ABall.y >= 785) {
-            ABall.v = -10;
-        } 
-        ABall.v = ABall.v + 0.1;
-        ABall.y += ABall.v;
+// Balls Sideways Movement
+function MoveBallSideWays(ABall) {
+    if(ABall.x >= 585) {
+        ABall.s = -4;
+    }else if (ABall.x <= 15) {
+        ABall.s = 4;
     }
+    ABall.x += ABall.s;
+}
+
+// Draw Bouncing Balls
+function BouncingMoveBall(ABall) {
+    if (ABall.y >= 785) {
+        ABall.v = -10;
+    } 
+    ABall.v = ABall.v + 0.1;
+    ABall.y += ABall.v;
+}
 
 // Balls with Loss of energy
 function GravityMoveBall(ABall) {
@@ -25,15 +34,6 @@ function GravityMoveBall(ABall) {
     } 
     ABall.v = ABall.v + 0.1;
     ABall.y += ABall.v;
-}
-
-function MoveBallSideWays(ABall) {
-    if(ABall.x >= 585) {
-        ABall.s = -4;
-    }else if (ABall.x <= 15) {
-        ABall.s = 4;
-    }
-    ABall.x += ABall.s;
 }
 
 function RemoveBall(ABall) {
