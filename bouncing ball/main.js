@@ -7,20 +7,26 @@ let ctx = cnv.getContext("2d");
 cnv.width = 600;
 cnv.height = 800;
 
+// global variables
+let V = 0;
+ let x = 0;
+ let y = 0;
+
 //  Ball Array
 let bouncingball = [];
 let gravityball = [];
 let bounceonmouse = [];
-let Gravityonmouse = [];
+let gravityonmouse = [];
 
 // Event listener / function
 document.addEventListener("mousemove", MouseMovementHandler);
 
 function MouseMovementHandler (event) {
-    document.innerHTMl = cnv;
-    let x = event.clientX;
-    let y = event.clientY;
-    //console.log(x, y);
+    // get Canvas location on Window
+    let cnvRect = cnv.getBoundingClientRect();
+    // MousePos subtracted by CanvasPos
+    x = Math.floor(event.clientX - cnvRect.left);
+    y = Math.floor(event.clientY - cnvRect.top);
 }
 
 document.addEventListener("keydown", keydownHandler)
@@ -34,17 +40,18 @@ function keydownHandler(event) {
         bouncingball.push(NewBall());
     }else if (event.keyCode === 87) {
         bouncingball.pop();
-    }else if (event.keyCode) {
-        bounceonmouse.push();
-    }else if (event.keyCode) {
+    }else if (event.keyCode == 65) {
+        bounceonmouse.push(NewBallMouse(x, y, 15, 0, -11, 4));
+    }else if (event.keyCode == 83) {
         bounceonmouse.pop();
-    }else if (event.keyCode) {
-        Gravityonmouse.push();
-    }else if (event.keyCode) {
-        Gravityonmouse.pop();
+    }else if (event.keyCode == 38) {
+        gravityonmouse.push(NewBallMouse(x, y, 15, 0, -11, 4));
+    }else if (event.keyCode == 40) {
+        gravityonmouse.pop();
     }
 }
-// call loop
+
+// call Draw loop
 requestAnimationFrame(Draw);
 
 // Draw Balls functions
@@ -65,11 +72,20 @@ function Draw() {
     }
     // Move and Draw Bounce to mouse Balls
     for (let i = 0; i < bounceonmouse.length; i++) {
-        
+        BounceToMouse(bounceonmouse[i])
+        DrawBall(bounceonmouse[i]);
     }
-    // Move and Draw Energy Loss to mouse Balls
-    for (let i = 0; i < Gravityonmouse.length; i++) {
-
+    // Move and Draw Gravity to mouse Balls
+    V = -1;
+    for (let i = 0; i < gravityonmouse.length; i++) {
+        GravityToMouse(gravityonmouse[i]);
+        MoveBallSideWays(gravityonmouse[i]);
+        DrawBall(gravityonmouse[i]);
+        V = i;
+        if(V < i) {
+            i--;
+        }
+        RemoveBallGravity(gravityonmouse[i])
     }
     requestAnimationFrame(Draw);
 }
@@ -80,7 +96,18 @@ function NewBall(InitX, InitY, InitR, InitV, InitG, InitS) {
         x: randomInt(10.5, 590),
         y: 785,
         r: 15,
-        v: -11,
+        v: 0,
+        g: -11,
+        s: 4
+    }
+}
+
+function NewBallMouse(InitX, InitY, InitR, InitV, InitG, InitS) {
+    return {
+        x: x,
+        y: y,
+        r: 15,
+        v: 0,
         g: -11,
         s: 4
     }
